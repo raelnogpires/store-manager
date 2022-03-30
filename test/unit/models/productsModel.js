@@ -14,11 +14,28 @@ describe('O endpoint `/products`', () => {
     connection.execute.restore();
   });
 
-  it('lista todos os produtos cadastrados no DB', async () => {
+  it('retorna todos os produtos cadastrados no DB', async () => {
     const result = await productsModel.getAll();
 
     expect(result).to.be.an('array');
     expect(result).to.have.length(3);
     expect(result).to.equal(productsMock);
+  });
+});
+
+describe('O endpoint `/products/:id`', () => {
+  const productMock = { id: 1, name: "Martelo do Thor", quantity: 10 };
+
+  before(() => {
+    const execute = productMock;
+    sinon.stub(connection, 'execute').resolves(execute);
+  });
+
+  it('retorna o produto que tem o id informado', () => {
+    const result = await productsModel.getById(1);
+
+    expect(result).to.have.property('id');
+    expect(result).to.have.length(1);
+    expect(result).to.equal(productMock);
   });
 });
