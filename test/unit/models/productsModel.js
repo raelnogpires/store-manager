@@ -6,7 +6,7 @@ const productsMock = require('./productsMock.json');
 
 describe('O endpoint `/products`', () => {
   before(() => {
-    const execute = (productsMock);
+    const execute = ([productsMock]);
     sinon.stub(connection, 'execute').resolves(execute);
   });
 
@@ -17,6 +17,8 @@ describe('O endpoint `/products`', () => {
   it('lista todos os produtos cadastrados no DB', async () => {
     const result = await productsModel.getAll();
 
+    expect(result).to.be.an('array');
+    expect(result).to.have.length(3);
     expect(result).to.equal(productsMock);
   });
 });
