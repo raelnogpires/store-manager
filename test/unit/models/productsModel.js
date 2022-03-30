@@ -2,11 +2,16 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 const connection = require('../../../models/connection');
 const productsModel = require('../../../models/productsModel');
-const productsMock = require('./productsMock.json');
 
 describe('O endpoint `/products`', () => {
+  const productsMock = [
+    { "id": 1, "name": "Martelo do Thor", "quantity": 10 },
+    {"id": 2, "name": "Traje de Encolhimento", "quantity": 20 },
+    {"id": 3, "name": "Escudo do Capitão América", "quantity": 30}
+  ];
+
   before(() => {
-    const execute = ([productsMock]);
+    const execute = (productsMock);
     sinon.stub(connection, 'execute').resolves(execute);
   });
 
