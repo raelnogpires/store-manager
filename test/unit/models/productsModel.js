@@ -11,7 +11,7 @@ describe('O endpoint `/products`', () => {
   ];
 
   before(() => {
-    const execute = (productsMock);
+    const execute = ([productsMock]);
     sinon.stub(connection, 'execute').resolves(execute);
   });
 
@@ -36,7 +36,11 @@ describe('O endpoint `/products/:id`', () => {
     sinon.stub(connection, 'execute').resolves(execute);
   });
 
-  it('retorna o produto que tem o id informado', () => {
+  after(() => {
+    connection.execute.restore();
+  });
+
+  it('retorna o produto que tem o id informado', async () => {
     const result = await productsModel.getById(1);
 
     expect(result).to.have.property('id');
