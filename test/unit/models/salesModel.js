@@ -1,6 +1,7 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
 const connection = require('../../../models/connection');
+const salesModel = require('../../../models/salesModel');
 
 describe('O endpoint `/sales`', () => {
   const salesMock = [
