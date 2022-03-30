@@ -26,3 +26,22 @@ describe('O endpoint `/sales`', () => {
     expect(result).to.equal(salesMock);
   });
 });
+
+describe('O endpoint `/sales/:id`', () => {
+  const saleMock = { id: 1, date: "2022-03-30 16:39:09" };
+
+  before(() => {
+    sinon.stub(connection, 'execute').resolves(saleMock);
+  });
+
+  after(() => {
+    connection.execute.restore();
+  });
+
+  it('retorna a venda que tem o id informado', async () => {
+    const result = await salesModel.getById(1);
+
+    expect(result).to.be.an('object');
+    expect(result).to.equal(saleMock);
+  });
+});
