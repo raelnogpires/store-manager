@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
 const connection = require('../../../models/connection');
-const productsService = require('../../../services/productsServices');
+const productsService = require('../../../services/productService');
 
 describe('O método productsService.getAll', () => {
   const productsMock = [
