@@ -3,7 +3,7 @@ const sinon = require('sinon');
 const connection = require('../../../models/connection');
 const productsModel = require('../../../models/productsModel');
 
-describe('O endpoint `/products`', () => {
+describe('O método productsModel.getAll', () => {
   const productsMock = [
     { "id": 1, "name": "Martelo do Thor", "quantity": 10 },
     {"id": 2, "name": "Traje de Encolhimento", "quantity": 20 },
@@ -28,7 +28,7 @@ describe('O endpoint `/products`', () => {
   });
 });
 
-describe('O endpoint `/products/:id`', () => {
+describe('O método productsModel.getById', () => {
   const productMock = { id: 1, name: "Martelo do Thor", quantity: 10 };
 
   before(() => {

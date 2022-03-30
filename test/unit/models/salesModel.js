@@ -3,7 +3,7 @@ const sinon = require('sinon');
 const connection = require('../../../models/connection');
 const salesModel = require('../../../models/salesModel');
 
-describe('O endpoint `/sales`', () => {
+describe('O método salesModel.getAll', () => {
   const salesMock = [
     { id: 1, date: "2022-03-30 16:39:09" },
     { id: 2, date: "2022-03-30 16:39:09" }
@@ -27,7 +27,7 @@ describe('O endpoint `/sales`', () => {
   });
 });
 
-describe('O endpoint `/sales/:id`', () => {
+describe('O método salesModel.getById`', () => {
   const saleMock = { id: 1, date: "2022-03-30 16:39:09" };
 
   before(() => {
