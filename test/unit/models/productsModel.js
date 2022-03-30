@@ -32,8 +32,7 @@ describe('O endpoint `/products/:id`', () => {
   const productMock = { id: 1, name: "Martelo do Thor", quantity: 10 };
 
   before(() => {
-    const execute = productMock;
-    sinon.stub(connection, 'execute').resolves(execute);
+    sinon.stub(connection, 'execute').resolves(productMock);
   });
 
   after(() => {
@@ -43,8 +42,7 @@ describe('O endpoint `/products/:id`', () => {
   it('retorna o produto que tem o id informado', async () => {
     const result = await productsModel.getById(1);
 
-    expect(result).to.have.property('id');
-    expect(result).to.have.length(1);
+    expect(result).to.be.an('object');
     expect(result).to.equal(productMock);
   });
 });
