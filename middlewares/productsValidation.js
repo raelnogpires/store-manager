@@ -1,5 +1,8 @@
+const productsModel = require('../models/productsModel');
+
 const BAD_REQUEST = 400;
 const UNPROCESSABLE_ENTITY = 422;
+const CONFLICT = 409;
 
 const nameExist = (name) => {
   if (name === undefined || typeof name !== 'string' || name.length === 0) {
@@ -55,4 +58,16 @@ const quantityValidation = async (req, res, next) => {
   next();
 };
 
-module.exports = { nameValidation, quantityValidation };
+const alreadyExists = async (req, res, next) => {
+  const { name } = req.body;
+
+  const product = await productsModel.getByName(name);
+
+  if (product) {
+    return res.status(CONFLICT).json({ message: 'Product already exists' });
+  }
+
+  next();
+};
+
+module.exports = { nameValidation, quantityValidation, alreadyExists };
