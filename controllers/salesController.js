@@ -3,6 +3,7 @@ const salesService = require('../services/salesService');
 const HTTP_OK = 200;
 const INTERNAL_ERROR = 500;
 const NOT_FOUND = 404;
+const CREATED = 201;
 
 const getAll = async (_req, res) => {
   const result = await salesService.getAll();
@@ -26,4 +27,10 @@ const getById = async (req, res) => {
   return res.status(HTTP_OK).json(result);
 };
 
-module.exports = { getAll, getById };
+const create = async (req, res) => {
+  const result = await salesService.create(req.body);
+
+  return res.status(CREATED).json(result);
+};
+
+module.exports = { getAll, getById, create };
