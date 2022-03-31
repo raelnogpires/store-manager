@@ -3,6 +3,7 @@ const productsService = require('../services/productsService');
 const HTTP_OK = 200;
 const INTERNAL_ERROR = 500;
 const NOT_FOUND = 404;
+const CREATED = 201;
 
 const getAll = async (_req, res) => {
   const result = await productsService.getAll();
@@ -26,4 +27,12 @@ const getById = async (req, res) => {
   return res.status(HTTP_OK).json(...result);
 };
 
-module.exports = { getAll, getById };
+const create = async (req, res) => {
+  const { name, quantity } = req.body;
+
+  const { id } = await productsService.create(name, quantity);
+
+  return res.status(CREATED).json({ id, name, quantity });
+};
+
+module.exports = { getAll, getById, create };
