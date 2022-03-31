@@ -30,14 +30,14 @@ describe('O método productsService.getById', () => {
     const productMock = { "id": 1, "name": "Martelo do Thor", "quantity": 10 };
 
     before(() => {
-      sinon.stub(connection, 'execute').resolves(productMock);
+      sinon.stub(connection, 'execute').resolves([productMock]);
     });
 
     after(() => {
       connection.execute.restore();
     });
 
-    it('o produto com o mesmo id passado', async () => {    
+    it('o produto com o mesmo id passado', async () => {
       const result = await productsService.getById(1);
 
       expect(result).to.be.an('object');
@@ -47,7 +47,7 @@ describe('O método productsService.getById', () => {
 
   describe('retorna', () => {
     before(() => {
-      sinon.stub(connection, 'execute').resolves();
+      sinon.stub(connection, 'execute').resolves([]);
     });
 
     after(() => {
@@ -55,7 +55,7 @@ describe('O método productsService.getById', () => {
     });
 
     it('false quando o id não é encontrado ou há erro', async () => {
-      const result = await productsService.getById('');
+      const result = await productsService.getById('a');
 
       expect(result).to.be.a('boolean');
       expect(result).to.equal(false);
