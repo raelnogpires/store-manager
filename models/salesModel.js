@@ -30,4 +30,19 @@ const getById = async (id) => {
   return result;
 };
 
-module.exports = { getAll, getById };
+const create = async (products) => {
+  const [{ insertId: saleId }] = await connection.execute(
+    'INSERT INTO StoreManger.sales (date) VALUES (NOW())',
+  );
+
+  const productsArray = products.map(({ productId, quantity }) => [saleId, productId, quantity]);
+
+  const query = `INSERTO INTO StoreManager.product_sales
+    (sale_id, product_id, quantity) VALUES ?`;
+
+  await connection.execute(query, [productsArray]);
+
+  return { id: saleId, soldItems: products };
+};
+
+module.exports = { getAll, getById, create };
