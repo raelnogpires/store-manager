@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
 const connection = require('../../../models/connection');
-const productsService = require('../../../services/productService');
+const productsService = require('../../../services/productsService');
 
 describe('O método productsService.getAll', () => {
   const productsMock = [
@@ -30,11 +30,11 @@ describe('O método productsService.getById', () => {
     const productMock = { "id": 1, "name": "Martelo do Thor", "quantity": 10 };
 
     before(() => {
-      sinon.stub(connection, 'execute').resolves(productMock)
+      sinon.stub(connection, 'execute').resolves(productMock);
     });
 
     after(() => {
-      connection.execute.restore()
+      connection.execute.restore();
     });
 
     it('o produto com o mesmo id passado', async () => {    
@@ -47,15 +47,15 @@ describe('O método productsService.getById', () => {
 
   describe('retorna', () => {
     before(() => {
-      sinon.stub(connection, 'execute').resolves(false)
+      sinon.stub(connection, 'execute').resolves();
     });
 
     after(() => {
-      connection.execute.restore()
+      connection.execute.restore();
     });
 
     it('false quando o id não é encontrado ou há erro', async () => {
-      const result = await productsService.getById();
+      const result = await productsService.getById('');
 
       expect(result).to.be.a('boolean');
       expect(result).to.equal(false);
