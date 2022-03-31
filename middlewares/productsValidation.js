@@ -13,7 +13,7 @@ const nameLength = (name) => {
   return true;
 };
 
-const nameValidation = (req, res, next) => {
+const nameValidation = async (req, res, next) => {
   const { name } = req.body;
 
   if (!nameExist(name)) {
@@ -39,7 +39,7 @@ const quantityValid = (quantity) => {
   return true;
 };
 
-const quantityValidation = (req, res, next) => {
+const quantityValidation = async (req, res, next) => {
   const { quantity } = req.body;
 
   if (!quantityExist(quantity)) {
