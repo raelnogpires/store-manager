@@ -23,7 +23,7 @@ const getById = async (req, res) => {
     return res.status(NOT_FOUND).json({ message: 'Sale not found' });
   }
 
-  return res.status(HTTP_OK).json(...result);
+  return res.status(HTTP_OK).json(result);
 };
 
 module.exports = { getAll, getById };
