@@ -20,10 +20,10 @@ const getById = async (req, res) => {
   const result = await productsService.getById(id);
 
   if (!result) {
-    return res.status(NOT_FOUND).json({ message: 'Produto não encontrado' });
+    return res.status(NOT_FOUND).json({ message: 'Product not found' });
   }
 
-  return res.status(HTTP_OK).json(result);
+  return res.status(HTTP_OK).json(...result);
 };
 
 module.exports = { getAll, getById };
