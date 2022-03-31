@@ -18,4 +18,11 @@ const create = async (name, quantity) => {
   return { id };
 };
 
-module.exports = { getAll, getById, create };
+const update = async (id, name, quantity) => {
+  const exists = await productsModel.getById(id);
+  if (!exists || exists.length === 0) return false;
+  const result = await productsModel.update(id, name, quantity);
+  return result;
+};
+
+module.exports = { getAll, getById, create, update };
