@@ -7,7 +7,6 @@ const getAll = async () => {
 };
 
 const getById = async (id) => {
-  if (id === undefined || typeof id !== 'number') return false;
   const result = await productsModel.getById(id);
   if (result === undefined || result.length === 0) return false;
   return result;

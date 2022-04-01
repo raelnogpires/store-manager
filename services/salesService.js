@@ -8,7 +8,6 @@ const getAll = async () => {
 
 const getById = async (id) => {
   const result = await salesModel.getById(id);
-  if (id === undefined || typeof id !== 'number') return false;
   if (result === undefined || result.length === 0) return false;
   return result;
 };
