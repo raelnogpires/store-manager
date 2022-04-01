@@ -63,7 +63,7 @@ const alreadyExists = async (req, res, next) => {
 
   const product = await productsModel.getByName(name);
 
-  if (product) {
+  if (product.length >= 1) {
     return res.status(CONFLICT).json({ message: 'Product already exists' });
   }
 
