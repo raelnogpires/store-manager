@@ -6,7 +6,6 @@ const {
   quantityValidation,
   alreadyExists,
 } = require('../middlewares/productsValidation');
-const { registerSale } = require('../middlewares/salesValidation');
 
 const router = express.Router();
 
@@ -25,6 +24,6 @@ router
   .delete('/products/:id', productsController.deleteById)
   .get('/sales', salesController.getAll)
   .get('/sales/:id', salesController.getById)
-  .post('/sales', registerSale, salesController.create);
+  .post('/sales', salesController.create);
 
 module.exports = router;

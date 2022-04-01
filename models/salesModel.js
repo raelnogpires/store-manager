@@ -32,17 +32,17 @@ const getById = async (id) => {
 
 const create = async (products) => {
   const [{ insertId: saleId }] = await connection.execute(
-    'INSERT INTO StoreManger.sales (date) VALUES (NOW())',
+    'INSERT INTO StoreManager.sales (date) VALUES (NOW());',
   );
 
   const productsArray = products.map(({ productId, quantity }) => [saleId, productId, quantity]);
 
-  const query = `INSERTO INTO StoreManager.product_sales
-    (sale_id, product_id, quantity) VALUES ?`;
+  const query = `INSERT INTO StoreManager.sales_products
+    (sale_id, product_id, quantity) VALUES ?;`;
 
-  await connection.execute(query, [productsArray]);
+  await connection.query(query, [productsArray]);
 
-  return { id: saleId, soldItems: products };
+  return { id: saleId, itemsSold: products };
 };
 
 module.exports = { getAll, getById, create };
