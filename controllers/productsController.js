@@ -39,9 +39,9 @@ const update = async (req, res) => {
   const { id } = req.params;
   const { name, quantity } = req.body;
 
-  const result = productsService.create(id, name, quantity);
+  const product = await productsService.update(id, name, quantity);
 
-  if (!result) {
+  if (!product) {
     return res.status(NOT_FOUND).json({ message: 'Product not found' });
   }
 

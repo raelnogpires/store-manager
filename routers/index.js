@@ -13,7 +13,15 @@ const router = express.Router();
 router
   .get('/products', productsController.getAll)
   .get('/products/:id', productsController.getById)
-  .post('/products', nameValidation, quantityValidation, alreadyExists, productsController.create)
+  .post('/products',
+    nameValidation,
+    quantityValidation,
+    alreadyExists,
+    productsController.create)
+  .put('/products/:id',
+    nameValidation,
+    quantityValidation,
+    productsController.update)
   .get('/sales', salesController.getAll)
   .get('/sales/:id', salesController.getById)
   .post('/sales', registerSale, salesController.create);

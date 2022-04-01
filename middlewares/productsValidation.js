@@ -70,4 +70,8 @@ const alreadyExists = async (req, res, next) => {
   next();
 };
 
-module.exports = { nameValidation, quantityValidation, alreadyExists };
+module.exports = {
+  nameValidation,
+  quantityValidation,
+  alreadyExists,
+};
