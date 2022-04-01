@@ -4,6 +4,7 @@ const HTTP_OK = 200;
 const INTERNAL_ERROR = 500;
 const NOT_FOUND = 404;
 const CREATED = 201;
+const NO_CONTENT = 204;
 
 const getAll = async (_req, res) => {
   const result = await productsService.getAll();
@@ -48,4 +49,22 @@ const update = async (req, res) => {
   return res.status(HTTP_OK).json({ id, name, quantity });
 };
 
-module.exports = { getAll, getById, create, update };
+const deleteById = async (req, res) => {
+  const { id } = req.params;
+
+  const product = await productsService.deleteById(id);
+
+  if (!product) {
+    return res.status(NOT_FOUND).json({ message: 'Product not found' });
+  }
+
+  return res.status(NO_CONTENT).end();
+};
+
+module.exports = {
+  getAll,
+  getById,
+  create,
+  update,
+  deleteById,
+};

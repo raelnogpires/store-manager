@@ -22,4 +22,15 @@ const update = async (id, name, quantity) => {
   return result;
 };
 
-module.exports = { getAll, getById, create, update };
+const deleteById = async (id) => {
+  const result = await productsModel.deleteById(id);
+  return result;
+};
+
+module.exports = {
+  getAll,
+  getById,
+  create,
+  update,
+  deleteById,
+};

@@ -22,6 +22,7 @@ router
     nameValidation,
     quantityValidation,
     productsController.update)
+  .delete('/products/:id', productsController.deleteById)
   .get('/sales', salesController.getAll)
   .get('/sales/:id', salesController.getById)
   .post('/sales', registerSale, salesController.create);

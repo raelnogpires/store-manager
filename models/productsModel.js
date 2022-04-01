@@ -12,7 +12,7 @@ const getById = async (id) => {
 };
 
 const getByName = async (name) => {
-  const query = 'SELECT * FROM StoreManager.products WHERE name = ?';
+  const query = 'SELECT * FROM StoreManager.products WHERE name = ?;';
   const [result] = await connection.execute(query, [name]);
   return result;
 };
@@ -24,11 +24,26 @@ const create = async (name, quantity) => {
 };
 
 const update = async (id, name, quantity) => {
-  const query = 'UPDATE StoreManager.products SET name = ?, quantity = ? WHERE id = ?';
+  const query = 'UPDATE StoreManager.products SET name = ?, quantity = ? WHERE id = ?;';
 
   const [{ affectedRows }] = await connection.execute(query, [name, quantity, id]);
 
   return affectedRows;
 };
 
-module.exports = { getAll, getById, getByName, create, update };
+const deleteById = async (id) => {
+  const query = 'DELETE FROM StoreManager.products WHERE id = ?;';
+
+  const [{ affectedRows }] = await connection.execute(query, [id]);
+
+  return affectedRows;
+}; 
+
+module.exports = {
+  getAll,
+  getById,
+  getByName,
+  create,
+  update,
+  deleteById,
+};
