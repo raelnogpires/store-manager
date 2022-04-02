@@ -5,7 +5,7 @@ const {
   nameValidation,
   quantityValidation,
   alreadyExists,
-} = require('../middlewares/productsValidation');
+  productIdValidation } = require('../middlewares/index');
 
 const router = express.Router();
 
@@ -13,17 +13,24 @@ router
   .get('/products', productsController.getAll)
   .get('/products/:id', productsController.getById)
   .post('/products',
-    nameValidation,
-    quantityValidation,
+    ...nameValidation,
+    ...quantityValidation,
     alreadyExists,
     productsController.create)
   .put('/products/:id',
-    nameValidation,
-    quantityValidation,
+    ...nameValidation,
+    ...quantityValidation,
     productsController.update)
   .delete('/products/:id', productsController.deleteById)
   .get('/sales', salesController.getAll)
   .get('/sales/:id', salesController.getById)
-  .post('/sales', salesController.create);
+  .post('/sales',
+    // productIdValidation,
+    // ...quantityValidation,
+    salesController.create)
+  .put('/sales/:id',
+    productIdValidation,
+    ...quantityValidation,
+   salesController.update);
 
 module.exports = router;
