@@ -1,64 +1,58 @@
 const productsService = require('../services/productsService');
-
-const HTTP_OK = 200;
-const INTERNAL_ERROR = 500;
-const NOT_FOUND = 404;
-const CREATED = 201;
-const NO_CONTENT = 204;
+const statusCode = require('./statusCode');
 
 const getAll = async (_req, res) => {
   const result = await productsService.getAll();
-
-  if (!result) {
-    return res.status(INTERNAL_ERROR).json({ message: 'Erro no Servidor' });
-  }
-
-  return res.status(HTTP_OK).json(result);
+  return res.status(statusCode.HTTP_OK).json(result);
 };
 
-const getById = async (req, res) => {
+const getById = async (req, res, next) => {
   const { id } = req.params;
 
   const result = await productsService.getById(id);
 
-  if (!result) {
-    return res.status(NOT_FOUND).json({ message: 'Product not found' });
+  if (result.error) {
+    return next(result.error);
   }
 
-  return res.status(HTTP_OK).json(...result);
+  return res.status(statusCode.HTTP_OK).json(...result);
 };
 
-const create = async (req, res) => {
+const create = async (req, res, next) => {
   const { name, quantity } = req.body;
 
-  const { id } = await productsService.create(name, quantity);
+  const result = await productsService.create(name, quantity);
 
-  return res.status(CREATED).json({ id, name, quantity });
+  if (result.error) {
+    return next(result.error);
+  }
+
+  return res.status(statusCode.CREATED).json({ id: result.id, name, quantity });
 };
 
-const update = async (req, res) => {
+const update = async (req, res, next) => {
   const { id } = req.params;
   const { name, quantity } = req.body;
 
-  const product = await productsService.update(id, name, quantity);
+  const result = await productsService.update(id, name, quantity);
 
-  if (!product) {
-    return res.status(NOT_FOUND).json({ message: 'Product not found' });
+  if (result.error) {
+    return next(result.error);
   }
 
-  return res.status(HTTP_OK).json({ id, name, quantity });
+  return res.status(statusCode.HTTP_OK).json({ id, name, quantity });
 };
 
-const deleteById = async (req, res) => {
+const deleteById = async (req, res, next) => {
   const { id } = req.params;
 
-  const product = await productsService.deleteById(id);
+  const result = await productsService.deleteById(id);
 
-  if (!product) {
-    return res.status(NOT_FOUND).json({ message: 'Product not found' });
+  if (result.error) {
+    return next(result.error);
   }
 
-  return res.status(NO_CONTENT).end();
+  return res.status(statusCode.NO_CONTENT).end();
 };
 
 module.exports = {

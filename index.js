@@ -1,6 +1,7 @@
 const express = require('express');
 require('dotenv').config();
-const routers = require('./routers/index');
+const productRouter = require('./routers/productRouter');
+const saleRouter = require('./routers/saleRouter');
 
 const app = express();
 
@@ -11,7 +12,8 @@ app.get('/', (_request, response) => {
   response.send();
 });
 
-app.use(routers);
+app.use(productRouter);
+app.use(saleRouter);
 
 app.listen(process.env.PORT, () => {
   console.log(`Escutando na porta ${process.env.PORT}`);
