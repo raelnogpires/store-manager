@@ -25,8 +25,8 @@ router
   .get('/sales', salesController.getAll)
   .get('/sales/:id', salesController.getById)
   .post('/sales',
-    // productIdValidation,
-    // ...quantityValidation,
+    productIdValidation,
+    ...quantityValidation,
     salesController.create)
   .put('/sales/:id',
     productIdValidation,
