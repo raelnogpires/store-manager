@@ -61,4 +61,4 @@ const productValidation = async (req, _res, next) => {
   next();
 };
 
-module.exports = { productValidation };
+module.exports = productValidation;
