@@ -6,48 +6,48 @@ const getAll = async (_req, res) => {
   return res.status(statusCode.HTTP_OK).json(result);
 };
 
-const getById = async (req, res, next) => {
-  const { id } = req.params;
+// const getById = async (req, res, next) => {
+//   const { id } = req.params;
 
-  const result = await salesService.getById(id);
+//   const result = await salesService.getById(id);
 
-  if (result.error) {
-    return next(result.error);
-  }
+//   if (result.error) {
+//     return next(result.error);
+//   }
 
-  return res.status(statusCode.HTTP_OK).json(result);
-};
+//   return res.status(statusCode.HTTP_OK).json(result);
+// };
 
-const create = async (req, res) => {
-  const result = await salesService.create(req.body);
-  return res.status(statusCode.CREATED).json(result);
-};
+// const create = async (req, res) => {
+//   const result = await salesService.create(req.body);
+//   return res.status(statusCode.CREATED).json(result);
+// };
 
-const update = async (req, res) => {
-  const { id } = req.params;
-  const { productId, quantity } = req.body;
+// const update = async (req, res) => {
+//   const { id } = req.params;
+//   const { productId, quantity } = req.body;
 
-  await salesService.update(id, productId, quantity);
+//   await salesService.update(id, productId, quantity);
 
-  return res.status(statusCode.HTTP_OK).json({ saleId: id, itemUpdated: [productId, quantity] });
-};
+//   return res.status(statusCode.HTTP_OK).json({ saleId: id, itemUpdated: [productId, quantity] });
+// };
 
-const deleteById = async (req, res, next) => {
-  const { id } = req.params;
+// const deleteById = async (req, res, next) => {
+//   const { id } = req.params;
 
-  const result = await salesService.deleteById(id);
+//   const result = await salesService.deleteById(id);
 
-  if (result.error) {
-    return next(result.error);
-  }
+//   if (result.error) {
+//     return next(result.error);
+//   }
 
-  return res.status(statusCode.NO_CONTENT).end();
-};
+//   return res.status(statusCode.NO_CONTENT).end();
+// };
 
 module.exports = {
   getAll,
-  getById,
-  create,
-  update,
-  deleteById,
+  // getById,
+  // create,
+  // update,
+  // deleteById,
 };
