@@ -1,25 +1,25 @@
 const salesModel = require('../models/salesModel');
-// const errorCode = require('../middlewares/error');
+const errorCode = require('../middlewares/error');
 
 const getAll = async () => {
-  const result = await salesModel.getAll();
-  return result;
+  const sales = await salesModel.getAll();
+  return sales;
 };
 
-// const getById = async (id) => {
-//   const result = await salesModel.getById(id);
+const getById = async (id) => {
+  const sale = await salesModel.getById(id);
 
-//   if (result === undefined || !result) {
-//     return {
-//       error: {
-//         code: errorCode.NOT_FOUND,
-//         message: 'Sale not found',
-//       },
-//     };
-//   }
+  if (!sale || sale === undefined) {
+    return {
+      error: {
+        code: errorCode.NOT_FOUND,
+        message: 'Sale not found',
+      },
+    };
+  }
 
-//   return result;
-// };
+  return { sale };
+};
 
 // const create = async (products) => {
 //   const result = await salesModel.create(products);
@@ -50,7 +50,7 @@ const getAll = async () => {
 
 module.exports = {
   getAll,
-  // getById,
+  getById,
   // create,
   // update,
   // deleteById,

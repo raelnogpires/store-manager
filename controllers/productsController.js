@@ -2,21 +2,21 @@ const productsService = require('../services/productsService');
 const statusCode = require('./statusCode');
 
 const getAll = async (_req, res) => {
-  const result = await productsService.getAll();
-  return res.status(statusCode.HTTP_OK).json(result);
+  const products = await productsService.getAll();
+  return res.status(statusCode.HTTP_OK).json(products);
 };
 
-// const getById = async (req, res, next) => {
-//   const { id } = req.params;
+const getById = async (req, res, next) => {
+  const { id } = req.params;
 
-//   const result = await productsService.getById(id);
+  const { product, error } = await productsService.getById(id);
 
-//   if (result.error) {
-//     return next(result.error);
-//   }
+  if (error) {
+    return next(error);
+  }
 
-//   return res.status(statusCode.HTTP_OK).json(...result);
-// };
+  return res.status(statusCode.HTTP_OK).json(...product);
+};
 
 // const create = async (req, res, next) => {
 //   const { name, quantity } = req.body;
@@ -57,7 +57,7 @@ const getAll = async (_req, res) => {
 
 module.exports = {
   getAll,
-  // getById,
+  getById,
   // create,
   // update,
   // deleteById,

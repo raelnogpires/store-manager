@@ -1,25 +1,22 @@
 const productsModel = require('../models/productsModel');
-// const errorCode = require('../middlewares/error');
+const errorCode = require('../middlewares/error');
 
 const getAll = async () => {
-  const result = await productsModel.getAll();
-  return result;
+  const products = await productsModel.getAll();
+  return products;
 };
 
-// const getById = async (id) => {
-//   const result = await productsModel.getById(id);
+const getById = async (id) => {
+  const product = await productsModel.getById(id);
 
-//   if (result === undefined || !result) {
-//     return {
-//       error: {
-//         code: errorCode.NOT_FOUND,
-//         message: 'Product not found',
-//       },
-//     };
-//   }
+  if (!product || product === undefined) {
+    return {
+      error: { code: errorCode.NOT_FOUND, message: 'Product not found' },
+    };
+  }
 
-//   return result;
-// };
+  return { product };
+};
 
 // const create = async (name, quantity) => {
 //   const product = await productsModel.getByName(name);
@@ -74,7 +71,7 @@ const getAll = async () => {
 
 module.exports = {
   getAll,
-  // getById,
+  getById,
   // create,
   // update,
   // deleteById,

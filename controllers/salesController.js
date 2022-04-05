@@ -2,21 +2,21 @@ const salesService = require('../services/salesService');
 const statusCode = require('./statusCode');
 
 const getAll = async (_req, res) => {
-  const result = await salesService.getAll();
-  return res.status(statusCode.HTTP_OK).json(result);
+  const sales = await salesService.getAll();
+  return res.status(statusCode.HTTP_OK).json(sales);
 };
 
-// const getById = async (req, res, next) => {
-//   const { id } = req.params;
+const getById = async (req, res, next) => {
+  const { id } = req.params;
 
-//   const result = await salesService.getById(id);
+  const { sale, error } = await salesService.getById(id);
 
-//   if (result.error) {
-//     return next(result.error);
-//   }
+  if (error) {
+    return next(error);
+  }
 
-//   return res.status(statusCode.HTTP_OK).json(result);
-// };
+  return res.status(statusCode.HTTP_OK).json(sale);
+};
 
 // const create = async (req, res) => {
 //   const result = await salesService.create(req.body);
@@ -46,7 +46,7 @@ const getAll = async (_req, res) => {
 
 module.exports = {
   getAll,
-  // getById,
+  getById,
   // create,
   // update,
   // deleteById,
