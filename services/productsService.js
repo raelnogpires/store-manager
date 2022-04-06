@@ -20,61 +20,59 @@ const getById = async (id) => {
   return { product: result };
 };
 
-// const create = async (name, quantity) => {
-//   const product = await productsModel.getByName(name);
+const create = async (name, quantity) => {
+  const product = await productsModel.getByName(name);
 
-//   if (product.length >= 1) {
-//     return {
-//       error: {
-//         code: errorCode.CONFLICT,
-//         message: 'Product already exists',
-//       },
-//     };
-//   }
+  if (product.length >= 1) {
+    return {
+      error: {
+        code: 409,
+        message: 'Product already exists',
+      },
+    };
+  }
 
-//   const { id } = await productsModel.create(name, quantity);
+  const { id } = await productsModel.create(name, quantity);
 
-//   return { id };
-// };
+  return { id };
+};
 
-// const update = async (id, name, quantity) => {
-//   const product = await productsModel.getById(id);
+const update = async (id, name, quantity) => {
+  const exist = await productsModel.getById(id);
 
-//   if (product === undefined || !product) {
-//     return {
-//       error: {
-//         code: errorCode.NOT_FOUND,
-//         message: 'Product not found',
-//       },
-//     };
-//   }
+  if (!exist) {
+    return {
+      error: {
+        code: 404,
+        message: 'Product not found',
+      },
+    };
+  }
 
-//   const result = await productsModel.update(id, name, quantity);
+  const result = await productsModel.update(id, name, quantity);
+  return { product: result };
+};
 
-//   return result;
-// };
+const deleteById = async (id) => {
+  const product = await productsModel.getById(id);
 
-// const deleteById = async (id) => {
-//   const product = await productsModel.getById(id);
+  if (!product) {
+    return {
+      error: {
+        code: 404,
+        message: 'Product not found',
+      },
+    };
+  }
 
-//   if (product === undefined || !product) {
-//     return {
-//       error: {
-//         code: errorCode.NOT_FOUND,
-//         message: 'Product not found',
-//       },
-//     };
-//   }
-
-//   const result = await productsModel.deleteById(id);
-
-//   return result;
-// };
+  await productsModel.deleteById(id);
+  return {};
+};
 
 module.exports = {
   getAll,
   getById,
-  // create,
-  // update,
-  // deleteById,
+  create,
+  update,
+  deleteById,
 };

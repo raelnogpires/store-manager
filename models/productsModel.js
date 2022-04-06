@@ -27,9 +27,9 @@ const create = async (name, quantity) => {
 const update = async (id, name, quantity) => {
   const query = 'UPDATE StoreManager.products SET name = ?, quantity = ? WHERE id = ?;';
 
-  const [{ affectedRows }] = await connection.execute(query, [name, quantity, id]);
+  await connection.execute(query, [name, quantity, id]);
 
-  return affectedRows;
+  return { id, name, quantity };
 };
 
 const deleteById = async (id) => {

@@ -18,47 +18,47 @@ const getById = async (req, res, next) => {
   return res.status(statusCode.HTTP_OK).json(...product);
 };
 
-// const create = async (req, res, next) => {
-//   const { name, quantity } = req.body;
+const create = async (req, res, next) => {
+  const { name, quantity } = req.body;
 
-//   const result = await productsService.create(name, quantity);
+  const { id, error } = await productsService.create(name, quantity);
 
-//   if (result.error) {
-//     return next(result.error);
-//   }
+  if (error) {
+    return next(error);
+  }
 
-//   return res.status(statusCode.CREATED).json({ id: result.id, name, quantity });
-// };
+  return res.status(statusCode.CREATED).json({ id, name, quantity });
+};
 
-// const update = async (req, res, next) => {
-//   const { id } = req.params;
-//   const { name, quantity } = req.body;
+const update = async (req, res, next) => {
+  const { id } = req.params;
+  const { name, quantity } = req.body;
 
-//   const result = await productsService.update(id, name, quantity);
+  const { product, error } = await productsService.update(id, name, quantity);
 
-//   if (result.error) {
-//     return next(result.error);
-//   }
+  if (error) {
+    return next(error);
+  }
 
-//   return res.status(statusCode.HTTP_OK).json({ id, name, quantity });
-// };
+  return res.status(statusCode.HTTP_OK).json(product);
+};
 
-// const deleteById = async (req, res, next) => {
-//   const { id } = req.params;
+const deleteById = async (req, res, next) => {
+  const { id } = req.params;
 
-//   const result = await productsService.deleteById(id);
+  const { error } = await productsService.deleteById(id);
 
-//   if (result.error) {
-//     return next(result.error);
-//   }
+  if (error) {
+    return next(error);
+  }
 
-//   return res.status(statusCode.NO_CONTENT).end();
-// };
+  return res.status(statusCode.NO_CONTENT).end();
+};
 
 module.exports = {
   getAll,
   getById,
-  // create,
-  // update,
-  // deleteById,
+  create,
+  update,
+  deleteById,
 };

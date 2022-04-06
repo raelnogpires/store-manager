@@ -18,10 +18,10 @@ const getById = async (req, res, next) => {
   return res.status(statusCode.HTTP_OK).json(sale);
 };
 
-// const create = async (req, res) => {
-//   const result = await salesService.create(req.body);
-//   return res.status(statusCode.CREATED).json(result);
-// };
+const create = async (req, res) => {
+  const result = await salesService.create(req.body);
+  return res.status(statusCode.CREATED).json(result);
+};
 
 // const update = async (req, res) => {
 //   const { id } = req.params;
@@ -47,7 +47,7 @@ const getById = async (req, res, next) => {
 module.exports = {
   getAll,
   getById,
-  // create,
+  create,
   // update,
   // deleteById,
 };

@@ -20,10 +20,10 @@ const getById = async (id) => {
   return { sale: result };
 };
 
-// const create = async (products) => {
-//   const result = await salesModel.create(products);
-//   return result;
-// };
+const create = async (products) => {
+  const result = await salesModel.create(products);
+  return result;
+};
 
 // const update = async (id, productId, quantity) => {
 //   const result = await salesModel.update(id, productId, quantity);
@@ -50,7 +50,7 @@ const getById = async (id) => {
 module.exports = {
   getAll,
   getById,
-  // create,
+  create,
   // update,
   // deleteById,
 };
