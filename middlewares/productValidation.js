@@ -1,10 +1,8 @@
-const errorCode = require('../services/errorCode');
-
 const nameValidation = (name) => {
   if (name === undefined || !name) {
     return {
       error: {
-        code: errorCode.BAD_REQUEST,
+        code: 400,
         message: '"name" is required',
       },
     };
@@ -13,7 +11,7 @@ const nameValidation = (name) => {
   if (name.length < 5) {
     return {
       error: {
-        code: errorCode.UNPROCESSABLE_ENTITY,
+        code: 422,
         message: '"name" is required',
       },
     };
@@ -26,7 +24,7 @@ const quantityValidation = (quantity) => {
   if (quantity === undefined || !quantity) {
     return {
       error: {
-        code: errorCode.BAD_REQUEST,
+        code: 400,
         message: '"quantity" is required',
       },
     };
@@ -35,7 +33,7 @@ const quantityValidation = (quantity) => {
   if (quantity <= 0 || !Number.isInteger(quantity)) {
     return {
       error: {
-        code: errorCode.UNPROCESSABLE_ENTITY,
+        code: 422,
         message: '"quantity" must be greater than or equal to 1',
       },
     };
