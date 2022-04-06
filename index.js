@@ -1,6 +1,6 @@
 const express = require('express');
 require('dotenv').config();
-// const productRouter = require('./routers/productRouter');
+const productRouter = require('./routers/productRouter');
 const saleRouter = require('./routers/saleRouter');
 const { errorMiddleware } = require('./middlewares/error');
 
@@ -13,7 +13,7 @@ app.get('/', (_request, response) => {
   response.send();
 });
 
-// app.use('/products', productRouter);
+app.use('/products', productRouter);
 app.use('/sales', saleRouter);
 
 app.use(errorMiddleware);

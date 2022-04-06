@@ -1,22 +1,22 @@
-// const productsService = require('../services/productsService');
-// const statusCode = require('./statusCode');
+const productsService = require('../services/productsService');
+const statusCode = require('./statusCode');
 
-// const getAll = async (_req, res) => {
-//   const products = await productsService.getAll();
-//   return res.status(statusCode.HTTP_OK).json(products);
-// };
+const getAll = async (_req, res) => {
+  const products = await productsService.getAll();
+  return res.status(statusCode.HTTP_OK).json(products);
+};
 
-// const getById = async (req, res, next) => {
-//   const { id } = req.params;
+const getById = async (req, res, next) => {
+  const { id } = req.params;
 
-//   const { product, error } = await productsService.getById(id);
+  const { product, error } = await productsService.getById(id);
 
-//   if (error) {
-//     return next(error);
-//   }
+  if (error) {
+    return next(error);
+  }
 
-//   return res.status(statusCode.HTTP_OK).json(...product);
-// };
+  return res.status(statusCode.HTTP_OK).json(...product);
+};
 
 // const create = async (req, res, next) => {
 //   const { name, quantity } = req.body;
@@ -55,10 +55,10 @@
 //   return res.status(statusCode.NO_CONTENT).end();
 // };
 
-// module.exports = {
-//   getAll,
-//   getById,
-//   // create,
-//   // update,
-//   // deleteById,
-// };
+module.exports = {
+  getAll,
+  getById,
+  // create,
+  // update,
+  // deleteById,
+};

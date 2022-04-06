@@ -27,6 +27,7 @@ const getById = async (id) => {
   ORDER BY sp.product_id`;
 
   const [result] = await connection.execute(query, [id]);
+  if (result.length === 0) return false;
   return result;
 };
 
