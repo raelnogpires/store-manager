@@ -1,5 +1,5 @@
 const productIdValidation = (id) => {
-  if (id === undefined || !id) {
+  if (!id) {
     return {
       error: {
         code: 400,
@@ -12,7 +12,7 @@ const productIdValidation = (id) => {
 };
 
 const quantityValidation = (quantity) => {
-  if (quantity === undefined || !quantity) {
+  if (!quantity) {
     return {
       error: {
         code: 400,
@@ -33,8 +33,8 @@ const quantityValidation = (quantity) => {
   return true;
 };
 
-const saleValidation = async (req, res, next) => {
-  const { productId, quantity } = req.body;
+const saleValidation = async (req, _res, next) => {
+  const [{ productId, quantity }] = req.body;
 
   const validateProductId = productIdValidation(productId);
   const validateQuantity = quantityValidation(quantity);
