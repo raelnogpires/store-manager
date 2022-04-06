@@ -46,12 +46,18 @@ const create = async (products) => {
   return { id: saleId, itemsSold: products };
 };
 
-const update = async (id, productId, quantity) => {
-  const query = 'UPDATE StoreManager.sales_products SET productId = ?, quantity = ? WHERE id = ?;';
+const update = async (saleId, products) => {
+  const query = `UPDATE StoreManager.sales_products
+  SET quantity = ?
+  WHERE sale_id = ? AND product_id = ?;`;
 
-  const [{ affectedRows }] = await connection.execute(query, [productId, id, quantity]);
+  const mapUpdate = ({ productId, quantity }) => (
+    connection.execute(query, [quantity, saleId, productId])
+  );
 
-  return affectedRows;
+  await Promise.all(products.map(mapUpdate));
+
+  return { saleId, itemUpdated: products };
 };
 
 const deleteById = async (id) => {

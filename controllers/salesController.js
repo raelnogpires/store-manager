@@ -23,14 +23,14 @@ const create = async (req, res) => {
   return res.status(statusCode.CREATED).json(result);
 };
 
-// const update = async (req, res) => {
-//   const { id } = req.params;
-//   const { productId, quantity } = req.body;
+const update = async (req, res) => {
+  const { id } = req.params;
+  const { productId, quantity } = req.body;
 
-//   await salesService.update(id, productId, quantity);
+  await salesService.update(id, productId, quantity);
 
-//   return res.status(statusCode.HTTP_OK).json({ saleId: id, itemUpdated: [productId, quantity] });
-// };
+  return res.status(statusCode.HTTP_OK).json({ saleId: id, itemUpdated: [productId, quantity] });
+};
 
 // const deleteById = async (req, res, next) => {
 //   const { id } = req.params;
@@ -48,6 +48,6 @@ module.exports = {
   getAll,
   getById,
   create,
-  // update,
+  update,
   // deleteById,
 };
