@@ -6,17 +6,17 @@ const getAll = async (_req, res) => {
   return res.status(statusCode.HTTP_OK).json(sales);
 };
 
-const getById = async (req, res, next) => {
-  const { id } = req.params;
+// const getById = async (req, res, next) => {
+//   const { id } = req.params;
 
-  const { sale, error } = await salesService.getById(id);
+//   const { sale, error } = await salesService.getById(id);
 
-  if (error) {
-    return next(error);
-  }
+//   if (error) {
+//     return next(error);
+//   }
 
-  return res.status(statusCode.HTTP_OK).json(sale);
-};
+//   return res.status(statusCode.HTTP_OK).json(sale);
+// };
 
 // const create = async (req, res) => {
 //   const result = await salesService.create(req.body);
@@ -46,7 +46,7 @@ const getById = async (req, res, next) => {
 
 module.exports = {
   getAll,
-  getById,
+  // getById,
   // create,
   // update,
   // deleteById,

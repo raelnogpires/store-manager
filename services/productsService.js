@@ -1,22 +1,22 @@
-const productsModel = require('../models/productsModel');
-const errorCode = require('../middlewares/error');
+// const productsModel = require('../models/productsModel');
+// const errorCode = require('../middlewares/error');
 
-const getAll = async () => {
-  const products = await productsModel.getAll();
-  return products;
-};
+// const getAll = async () => {
+//   const products = await productsModel.getAll();
+//   return products;
+// };
 
-const getById = async (id) => {
-  const product = await productsModel.getById(id);
+// const getById = async (id) => {
+//   const product = await productsModel.getById(id);
 
-  if (!product || product === undefined) {
-    return {
-      error: { code: errorCode.NOT_FOUND, message: 'Product not found' },
-    };
-  }
+//   if (!product || product === undefined) {
+//     return {
+//       error: { code: errorCode.NOT_FOUND, message: 'Product not found' },
+//     };
+//   }
 
-  return { product };
-};
+//   return { product };
+// };
 
 // const create = async (name, quantity) => {
 //   const product = await productsModel.getByName(name);
@@ -69,10 +69,10 @@ const getById = async (id) => {
 //   return result;
 // };
 
-module.exports = {
-  getAll,
-  getById,
-  // create,
-  // update,
-  // deleteById,
-};
+// module.exports = {
+//   getAll,
+//   getById,
+//   // create,
+//   // update,
+//   // deleteById,
+// };
