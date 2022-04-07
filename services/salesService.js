@@ -30,27 +30,27 @@ const update = async (id, products) => {
   return result;
 };
 
-// const deleteById = async (id) => {
-//   const sale = await salesModel.getById(id);
+const deleteById = async (id) => {
+  const sale = await salesModel.getById(id);
 
-//   if (sale === undefined || !sale) {
-//     return {
-//       error: {
-//         code: errorCode.NOT_FOUND,
-//         message: 'Sale not found',
-//       },
-//     };
-//   }
+  if (!sale) {
+    return {
+      error: {
+        code: 404,
+        message: 'Sale not found',
+      },
+    };
+  }
 
-//   const result = await salesModel.deleteById(id);
+  await salesModel.deleteById(id);
 
-//   return result;
-// };
+  return {};
+};
 
 module.exports = {
   getAll,
   getById,
   create,
   update,
-  // deleteById,
+  deleteById,
 };

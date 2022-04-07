@@ -31,22 +31,22 @@ const update = async (req, res) => {
   return res.status(statusCode.HTTP_OK).json(result);
 };
 
-// const deleteById = async (req, res, next) => {
-//   const { id } = req.params;
+const deleteById = async (req, res, next) => {
+  const { id } = req.params;
 
-//   const result = await salesService.deleteById(id);
+  const { error } = await salesService.deleteById(id);
 
-//   if (result.error) {
-//     return next(result.error);
-//   }
+  if (error) {
+    return next(error);
+  }
 
-//   return res.status(statusCode.NO_CONTENT).end();
-// };
+  return res.status(statusCode.NO_CONTENT).end();
+};
 
 module.exports = {
   getAll,
   getById,
   create,
   update,
-  // deleteById,
+  deleteById,
 };
