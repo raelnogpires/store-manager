@@ -61,3 +61,46 @@ describe('O método productsService.getById', () => {
     });
   });
 });
+
+describe('O método productsService.create', () => {
+  describe('quando o nome não existe', () => {
+    const productMock = { "id": 1, "name": "Martelo do Thor", "quantity": 10 };
+
+    before(() => {
+      sinon.stub(productsModel, 'getByName').resolves(false);
+      sinon.stub(productsModel, 'create').resolves(productMock);
+    });
+
+    after(() => {
+      productsModel.getByName.restore();
+      productsModel.create.restore();
+    });
+
+    it('o id do produto criado', async () => {
+      const { name, quantity } = productMock;
+      const { id } = await productsService.create(name, quantity);
+
+      expect(id).to.deep.equal(productMock.id);
+    });
+  });
+
+  describe('quando o nome existe', () => {
+    const productMock = { "id": 1, "name": "Martelo do Thor", "quantity": 10 };
+
+    before(() => {
+      sinon.stub(productsModel, 'getByName').resolves(productMock.name);
+    });
+
+    after(() => {
+      productsModel.getByName.restore();
+    });
+
+    it('um código e uma mensagem de erro', async () => {
+      const { name, quantity } = productMock;
+      const { error } = await productsService.create(name, quantity);
+
+      expect(error).to.have.property('code', 409);
+      expect(error).to.have.property('message', 'Product already exists');
+    });
+  });
+});
