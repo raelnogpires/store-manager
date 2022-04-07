@@ -1,6 +1,6 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
-const connection = require('../../../models/connection');
+const productsModel = require('../../../models/productsModel');
 const productsService = require('../../../services/productsService');
 
 describe('O método productsService.getAll', () => {
@@ -11,11 +11,11 @@ describe('O método productsService.getAll', () => {
   ];
 
   before(() => {
-    sinon.stub(connection, 'execute').resolves([productsMock]);
+    sinon.stub(productsModel, 'getAll').resolves(productsMock);
   });
 
   after(() => {
-    connection.execute.restore();
+    productsModel.getAll.restore();
   });
 
   it('retorna os produtos cadastrados no DB', async () => {
@@ -30,35 +30,38 @@ describe('O método productsService.getById', () => {
     const productMock = { "id": 1, "name": "Martelo do Thor", "quantity": 10 };
 
     before(() => {
-      sinon.stub(connection, 'execute').resolves([productMock]);
+      sinon.stub(productsModel, 'getById').resolves(productMock);
     });
 
     after(() => {
-      connection.execute.restore();
+      productsModel.getById.restore();
     });
 
     it('o produto com o mesmo id passado', async () => {
-      const result = await productsService.getById(1);
+      const { product } = await productsService.getById(productMock.id);
 
-      expect(result).to.be.an('object');
-      expect(result).to.equal(productMock);
+      expect(product).to.deep.equal(productMock);
     });
   });
 
   describe('retorna', () => {
     before(() => {
-      sinon.stub(connection, 'execute').resolves([]);
+      sinon.stub(productsModel, 'getById').resolves(false);
     });
 
     after(() => {
-      connection.execute.restore();
+      productsModel.getById.restore();
     });
 
-    it('false quando o id não é encontrado ou há erro', async () => {
-      const result = await productsService.getById('a');
+    it('um código e uma mensagem de erro quando o id não é encontrado', async () => {
+      const { error } = await productsService.getById(1);
 
-      expect(result).to.be.a('boolean');
-      expect(result).to.equal(false);
+      expect(error).to.have.property('code', 404);
+      expect(error).to.have.property('message', 'Product not found');
     });
   });
+});
+
+describe('O método productsService.create', () => {
+
 });

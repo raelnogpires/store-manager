@@ -1,6 +1,6 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
-const connection = require('../../../models/connection');
+const salesModel = require('../../../models/salesModel');
 const salesService = require('../../../services/salesService');
 
 describe('O método salesService.getAll', () => {
@@ -11,12 +11,11 @@ describe('O método salesService.getAll', () => {
   ];
 
   before(() => {
-    const execute = [salesMock];
-    sinon.stub(connection, 'execute').resolves(execute);
+    sinon.stub(salesModel, 'getAll').resolves(salesMock);
   });
 
   after(() => {
-    connection.execute.restore();
+    salesModel.getAll.restore();
   });
 
   it('retorna todas as vendas cadastradas no DB', async () => {
@@ -33,36 +32,36 @@ describe('O método salesService.getById', () => {
     const saleMock = { saleId: 2, date: "2022-03-30 16:39:09", productId: 3, quantity: 15 };
 
     before(() => {
-      sinon.stub(connection, 'execute').resolves([saleMock]);
+      sinon.stub(salesModel, 'getById').resolves(saleMock);
     });
 
     after(() => {
-      connection.execute.restore();
+      salesModel.getById.restore();
     });
 
     it('a venda com o mesmo id passado', async () => {
-      const result = await salesService.getById(2);
+      const { sale } = await salesService.getById(saleMock.id);
 
-      expect(result).to.have.property('saleId')
-      expect(result).to.be.an('object');
-      expect(result).to.equal(saleMock);
+      expect(sale).to.have.property('saleId')
+      expect(sale).to.be.an('object');
+      expect(sale).to.equal(saleMock);
     });
   });
 
   describe('retorna', () => {
     before(() => {
-      sinon.stub(connection, 'execute').resolves([]);
+      sinon.stub(salesModel, 'getById').resolves(false);
     });
 
     after(() => {
-      connection.execute.restore();
+      salesModel.getById.restore();
     });
 
     it('false quando o id não é encontrado ou há erro', async () => {
-      const result = await salesService.getById('a');
+      const { error } = await salesService.getById(1);
 
-      expect(result).to.be.a('boolean');
-      expect(result).to.equal(false);
+      expect(error).to.have.property('code', 404);
+      expect(error).to.have.property('message', 'Sale not found');
     });
   });
 });

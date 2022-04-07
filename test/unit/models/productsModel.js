@@ -29,21 +29,39 @@ describe('O método productsModel.getAll', () => {
 });
 
 describe('O método productsModel.getById', () => {
-  const productMock = { id: 1, name: "Martelo do Thor", quantity: 10 };
+  describe('quando o id existe', () => {
+    const productMock = { id: 1, name: "Martelo do Thor", quantity: 10 };
 
-  before(() => {
-    sinon.stub(connection, 'execute').resolves([productMock]);
+    before(() => {
+      sinon.stub(connection, 'execute').resolves([productMock]);
+    });
+  
+    after(() => {
+      connection.execute.restore();
+    });
+  
+    it('retorna o produto', async () => {
+      const result = await productsModel.getById(1);
+  
+      expect(result).to.be.an('object');
+      expect(result).to.have.property('id');
+      expect(result).to.equal(productMock);
+    });
   });
 
-  after(() => {
-    connection.execute.restore();
-  });
+  describe('quando o id não existe', () => {
+    before(() => {
+      sinon.stub(connection, 'execute').resolves([[]]);
+    });
 
-  it('retorna o produto que tem o id informado', async () => {
-    const result = await productsModel.getById(1);
+    after(() => {
+      connection.execute.restore();
+    });
+  
+    it('retorna false', async () => {
+      const result = await productsModel.getById(1);
 
-    expect(result).to.be.an('object');
-    expect(result).to.have.property('id');
-    expect(result).to.equal(productMock);
+      expect(result).to.be.false;
+    });
   });
 });
