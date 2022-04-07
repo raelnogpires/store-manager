@@ -57,7 +57,7 @@ describe('O método salesService.getById', () => {
       salesModel.getById.restore();
     });
 
-    it('false quando o id não é encontrado ou há erro', async () => {
+    it('um código e uma mensagem de erro quando o id não é encontrado', async () => {
       const { error } = await salesService.getById(1);
 
       expect(error).to.have.property('code', 404);

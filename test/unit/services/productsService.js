@@ -61,7 +61,3 @@ describe('O método productsService.getById', () => {
     });
   });
 });
-
-describe('O método productsService.create', () => {
-
-});

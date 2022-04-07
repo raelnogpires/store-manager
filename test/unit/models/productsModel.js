@@ -65,3 +65,41 @@ describe('O método productsModel.getById', () => {
     });
   });
 });
+
+describe('O método productsModel.getByName', () => {
+  describe('quando o nome é encontrado no DB', () => {
+    const productMock = { id: 1, name: "Martelo do Thor", quantity: 10 };
+
+    before(() => {
+      sinon.stub(connection, 'execute').resolves([productMock]);
+    });
+  
+    after(() => {
+      connection.execute.restore();
+    });
+
+    it('retorna o produto correto', async () => {
+      const result = await productsModel.getByName('Martelo do Thor');
+
+      expect(result).to.be.an('object');
+      expect(result).to.have.property('name', 'Martelo do Thor');
+      expect(result).to.equal(productMock);
+    });
+  });
+
+  describe('quando o nome não é encontrado no DB', () => {
+    before(() => {
+      sinon.stub(connection, 'execute').resolves([[]]);
+    });
+  
+    after(() => {
+      connection.execute.restore();
+    });
+
+    it('retorna false', async () => {
+      const result = await productsModel.getByName('Martelo do Homem Aranha');
+
+      expect(result).to.be.false;
+    });
+  });
+});

@@ -15,6 +15,7 @@ const getById = async (id) => {
 const getByName = async (name) => {
   const query = 'SELECT * FROM StoreManager.products WHERE name = ?;';
   const [result] = await connection.execute(query, [name]);
+  if (result.length === 0) return false;
   return result;
 };
 
