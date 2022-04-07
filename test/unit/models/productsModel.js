@@ -1,4 +1,5 @@
 const { expect } = require('chai');
+const { describe } = require('mocha');
 const sinon = require('sinon');
 const connection = require('../../../models/connection');
 const productsModel = require('../../../models/productsModel');
@@ -100,6 +101,26 @@ describe('O método productsModel.getByName', () => {
       const result = await productsModel.getByName('Martelo do Homem Aranha');
 
       expect(result).to.be.false;
+    });
+  });
+});
+
+describe('O método productsModel.create', () => {
+  describe('quando o nome é encontrado no DB', () => {
+    const productMock = { id: 1, name: "Martelo do Thor", quantity: 10 };
+
+    before(() => {
+      sinon.stub(connection, 'execute').resolves([{ insertId: productMock.id }]);
+    });
+  
+    after(() => {
+      connection.execute.restore();
+    });
+
+    it('retorna o produto correto', async () => {
+      const result = await productsModel.create(productMock.name, productMock.quantity);
+
+      expect(result).to.deep.equal({ id: productMock.id });
     });
   });
 });
