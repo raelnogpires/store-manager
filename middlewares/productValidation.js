@@ -1,5 +1,5 @@
 const nameValidation = (name) => {
-  if (name === undefined || !name) {
+  if (!name) {
     return {
       error: {
         code: 400,
@@ -12,7 +12,7 @@ const nameValidation = (name) => {
     return {
       error: {
         code: 422,
-        message: '"name" is required',
+        message: '"name" length must be at least 5 characters long',
       },
     };
   }
@@ -21,7 +21,7 @@ const nameValidation = (name) => {
 };
 
 const quantityValidation = (quantity) => {
-  if (quantity === undefined || !quantity) {
+  if (!quantity) {
     return {
       error: {
         code: 400,
