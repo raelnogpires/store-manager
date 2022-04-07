@@ -106,7 +106,7 @@ describe('O método productsModel.getByName', () => {
 });
 
 describe('O método productsModel.create', () => {
-  describe('quando o nome é encontrado no DB', () => {
+  describe('quando não há nome conflitante no DB', () => {
     const productMock = { id: 1, name: "Martelo do Thor", quantity: 10 };
 
     before(() => {
@@ -117,7 +117,7 @@ describe('O método productsModel.create', () => {
       connection.execute.restore();
     });
 
-    it('retorna o produto correto', async () => {
+    it('cria o produto corretamente', async () => {
       const result = await productsModel.create(productMock.name, productMock.quantity);
 
       expect(result).to.deep.equal({ id: productMock.id });

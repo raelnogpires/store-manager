@@ -47,3 +47,29 @@ describe('O método salesModel.getById`', () => {
     expect(result).to.equal(saleMock);
   });
 });
+
+describe('O método salesModel.create', () => {
+  const salesMock = [
+    { productId: 1, quantity: 2 },
+    { productId: 2, quantity: 3 },
+  ];
+
+  const createdSaleMock = { id: 1, itemsSold: salesMock.map(({ productId, quantity }) => (
+    { productId, quantity }
+  ))};
+
+  before(() => {
+    sinon.stub(connection, 'execute').resolves([{ insertId: createdSaleMock.id }]);
+  });
+
+  after(() => {
+    connection.execute.restore();
+  });
+
+  it('cria a venda corretamente', async () => {
+    const sale = await salesModel.create(createdSaleMock.itemsSold);
+
+    expect(sale).to.be.an('object');
+    expect(sale).to.deep.equal(createdSaleMock);
+  });
+});
