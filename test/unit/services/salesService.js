@@ -65,3 +65,28 @@ describe('O método salesService.getById', () => {
     });
   });
 });
+
+describe('O método salesService.create', () => {
+  const salesMock = [
+    { productId: 1, quantity: 2 },
+    { productId: 2, quantity: 3 },
+  ];
+
+  const createdSaleMock = { id: 3, itemsSold: salesMock.map(({ productId, quantity }) => (
+    { productId, quantity }
+  ))};
+
+  before(() => {
+    sinon.stub(salesModel, 'create').resolves(createdSaleMock);
+  });
+
+  after(() => {
+    salesModel.create.restore();
+  });
+
+  it('retorna a venda criada', async () => {
+    const result = await salesService.create(createdSaleMock.itemsSold);
+
+    expect(result).to.equal(createdSaleMock);
+  });
+});
