@@ -15,7 +15,7 @@ const getById = async (req, res, next) => {
     return next(error);
   }
 
-  return res.status(statusCode.HTTP_OK).json(...product);
+  return res.status(statusCode.HTTP_OK).json(product);
 };
 
 const create = async (req, res, next) => {
