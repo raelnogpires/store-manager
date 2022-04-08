@@ -2,6 +2,7 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 const connection = require('../../../models/connection');
 const salesModel = require('../../../models/salesModel');
+const mock = require('../mocks/salesMock.json');
 
 describe('O método salesModel.getAll', () => {
   const salesMock = [
@@ -49,17 +50,13 @@ describe('O método salesModel.getById`', () => {
 });
 
 describe('O método salesModel.create', () => {
-  const salesMock = [
-    { productId: 1, quantity: 2 },
-    { productId: 2, quantity: 3 },
-  ];
-
-  const createdSaleMock = { id: 1, itemsSold: salesMock.map(({ productId, quantity }) => (
+  const createdSaleMock = { id: 1, itemsSold: mock.map(({ productId, quantity }) => (
     { productId, quantity }
-  ))};
+  )),
+  };
 
   before(() => {
-    sinon.stub(connection, 'execute').resolves([{ insertId: 1 }]);
+    sinon.stub(connection, 'execute').resolves([{ insertId: createdSaleMock.id }]);
   });
 
   after(() => {
@@ -67,7 +64,7 @@ describe('O método salesModel.create', () => {
   });
 
   it('cria a venda corretamente', async () => {
-    const sale = await salesModel.create(salesMock);
+    const sale = await salesModel.create(createdSaleMock.itemsSold);
     expect(sale).to.deep.equal(createdSaleMock);
   });
 });

@@ -36,12 +36,14 @@ const create = async (products) => {
     'INSERT INTO StoreManager.sales (date) VALUES (NOW());',
   );
 
-  const productsArray = products.map(({ productId, quantity }) => [saleId, productId, quantity]);
-
   const query = `INSERT INTO StoreManager.sales_products
-    (sale_id, product_id, quantity) VALUES ?;`;
+  (sale_id, product_id, quantity) VALUES (?, ?, ?);`;
 
-  await connection.query(query, [productsArray]);
+  const insertSale = ({ productId, quantity }) => (
+    connection.execute(query, [saleId, productId, quantity])
+  );
+
+  await Promise.all(products.map(insertSale));
 
   return { id: saleId, itemsSold: products };
 };
