@@ -84,7 +84,7 @@ describe('O método productsService.create', () => {
     });
   });
 
-  describe('quando o nome existe', () => {
+  describe('quando o já nome existe', () => {
     const productMock = { "id": 1, "name": "Martelo do Thor", "quantity": 10 };
 
     before(() => {

@@ -87,3 +87,33 @@ describe('O método productsController.getById', () => {
     });
   });
 });
+
+describe('O método productsController.create', () => {
+  describe('quando o nome não existe', () => {
+    const request = {};
+    const response = {};
+
+    before(() => {
+      request.body = { name: productMock.name, quantity: productMock.quantity };
+      response.status = sinon.stub().returns(response);
+      response.json = sinon.stub().returns();
+      sinon.stub(productsService, 'create').resolves({ id: productMock.id });
+    });
+
+    after(() => {
+      productsService.create.restore();
+    });
+
+    it('retorna o status HTTP 201', async () => {
+      await productsController.create(request, response);
+      expect(response.status.calledWith(201)).to.be.true;
+    });
+
+    it('retorna o produto criado', async () => {
+      await productsController.create(request, response);
+      expect(response.json.calledWith(productMock)).to.be.true;
+    });
+  });
+
+  describe('quando o nome já existe', () => {});
+});
