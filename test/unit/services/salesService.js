@@ -3,13 +3,16 @@ const sinon = require('sinon');
 const salesModel = require('../../../models/salesModel');
 const salesService = require('../../../services/salesService');
 
-describe('O método salesService.getAll', () => {
-  const salesMock = [
-    { saleId: 1, date: "2022-03-30 16:39:09", productId: 1, quantity: 5 },
-    { saleId: 1, date: "2022-03-30 16:39:09", productId: 2, quantity: 10 },
-    { saleId: 2, date: "2022-03-30 16:39:09", productId: 3, quantity: 15 },
-  ];
+const salesMock = [
+  { saleId: 1, date: "2022-03-30 16:39:09", productId: 1, quantity: 5 },
+  { saleId: 1, date: "2022-03-30 16:39:09", productId: 2, quantity: 10 },
+  { saleId: 2, date: "2022-03-30 16:39:09", productId: 3, quantity: 15 },
+];
 
+const saleMock = { saleId: 2, date: "2022-03-30 16:39:09", productId: 3, quantity: 15 };
+
+
+describe('O método salesService.getAll', () => {
   before(() => {
     sinon.stub(salesModel, 'getAll').resolves(salesMock);
   });
@@ -29,8 +32,6 @@ describe('O método salesService.getAll', () => {
 
 describe('O método salesService.getById', () => {
   describe('retorna', () => {
-    const saleMock = { saleId: 2, date: "2022-03-30 16:39:09", productId: 3, quantity: 15 };
-
     before(() => {
       sinon.stub(salesModel, 'getById').resolves(saleMock);
     });
@@ -67,12 +68,12 @@ describe('O método salesService.getById', () => {
 });
 
 describe('O método salesService.create', () => {
-  const salesMock = [
+  const createSalesMock = [
     { productId: 1, quantity: 2 },
     { productId: 2, quantity: 3 },
   ];
 
-  const createdSaleMock = { id: 3, itemsSold: salesMock.map(({ productId, quantity }) => (
+  const createdSaleMock = { id: 3, itemsSold: createSalesMock.map(({ productId, quantity }) => (
     { productId, quantity }
   ))};
 

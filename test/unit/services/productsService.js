@@ -76,7 +76,7 @@ describe('O método productsService.create', () => {
       productsModel.create.restore();
     });
 
-    it('o id do produto criado', async () => {
+    it('retorna o id do produto criado', async () => {
       const { name, quantity } = productMock;
       const { id } = await productsService.create(name, quantity);
 
@@ -95,7 +95,7 @@ describe('O método productsService.create', () => {
       productsModel.getByName.restore();
     });
 
-    it('um código e uma mensagem de erro', async () => {
+    it('retorna um código e uma mensagem de erro', async () => {
       const { name, quantity } = productMock;
       const { error } = await productsService.create(name, quantity);
 

@@ -12,6 +12,7 @@ const productsMock = [
 const productMock = { "id": 1, "name": "Martelo do Thor", "quantity": 10 };
 
 const notFoundErrorMock = { code: 404, message: 'Product not found' };
+const alreadyExistsErrorMock = { code: 409, message: 'Product already exists' }
 
 describe('O método productsController.getAll', () => {
   const request = {};
@@ -59,7 +60,7 @@ describe('O método productsController.getById', () => {
       expect(response.status.calledWith(200)).to.be.true;
     });
 
-    it('o produto com o mesmo id passado', async () => {
+    it('o produto com o id informado', async () => {
       await productsController.getById(request, response);
       expect(response.json.calledWith(productMock)).to.be.true;
     });
@@ -115,5 +116,25 @@ describe('O método productsController.create', () => {
     });
   });
 
-  describe('quando o nome já existe', () => {});
+  describe('quando o nome já existe', () => {
+    const request = {};
+    const response = {};
+    const next = sinon.stub().returns();
+
+    before(() => {
+      request.body = { name: productMock.name, quantity: productMock.quantity };
+      response.status = sinon.stub().returns(response);
+      response.json = sinon.stub().returns();
+      sinon.stub(productsService, 'create').resolves({ error: alreadyExistsErrorMock });
+    });
+
+    after(() => {
+      productsService.create.restore();
+    });
+
+    it('chama o next com o objeto de erro', async () => {
+      await productsController.create(request, response, next);
+      expect(next.calledWith(alreadyExistsErrorMock)).to.be.true;
+    });
+  });
 });

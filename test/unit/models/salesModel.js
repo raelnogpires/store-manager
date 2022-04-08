@@ -59,7 +59,7 @@ describe('O método salesModel.create', () => {
   ))};
 
   before(() => {
-    sinon.stub(connection, 'execute').resolves([{ insertId: createdSaleMock.id }]);
+    sinon.stub(connection, 'execute').resolves([{ insertId: 1 }]);
   });
 
   after(() => {
@@ -67,9 +67,7 @@ describe('O método salesModel.create', () => {
   });
 
   it('cria a venda corretamente', async () => {
-    const sale = await salesModel.create(createdSaleMock.itemsSold);
-
-    expect(sale).to.be.an('object');
+    const sale = await salesModel.create(salesMock);
     expect(sale).to.deep.equal(createdSaleMock);
   });
 });
