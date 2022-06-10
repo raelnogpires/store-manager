@@ -30,3 +30,101 @@ Será necessário ter instalado as tecnologias [Docker](https://docs.docker.com/
 ```
 
 Para encerrar a aplicação, execute no terminal `Ctrl + C` .
+
+## Executando os testes
+Em um terminal execute:
+```sh
+ docker-compose up run npm test
+```
+
+## Documentação
+
+### Listar produtos
+Busca todos os produtos cadastrados.  
+O corpo da resposta contém um array JSON contendo os produtos.  
+
+<details>
+  <summary><strong>Detalhes</strong></summary>
+
+#### URL
+```sh
+ GET http://localhost:3000/products
+```
+
+#### Campos da resposta
+| **Campo**  | **Tipo** | **Descrição**           |
+|:-----------|:---------|:------------------------|
+| id         | int      | ID do produto.          |
+| name       | string   | Nome do produto.        |
+| quantity   | int      | Quantidade do produto.  |
+
+#### Códigos de status da resposta
+| **Código** | **Descrição**                      |
+|:-----------|:-----------------------------------|
+| 200        | Produtos retornados com sucesso.   |
+
+#### Exemplo
+Resposta:
+```json
+ [
+  {
+    "id": 1,
+    "name": "Martelo de Thor",
+    "quantity": 10
+  },
+  {
+    "id": 2,
+    "name": "Traje de encolhimento",
+    "quantity": 20
+  },  
+  {
+    "id": 3,
+    "name": "Escudo do CapitÃ£o AmÃ©rica",
+    "quantity": 30
+  }
+ ]
+```
+
+</details>
+
+### Listar produtos por ID
+Busca um produto especificado pelo seu ID.  
+Corpo da resposta contém um objeto JSON com o produto.  
+
+<details>
+  <summary><strong>Detalhes</strong></summary>
+
+#### URL
+```sh
+ GET http://localhost:3000/products/1
+```
+
+#### Parâmetros
+
+##### Path
+| **Campo**  | **Tipo** | **Descrição**           |
+|:-----------|:---------|:------------------------|
+| id         | int      | ID do produto.          |
+
+#### Campos da resposta
+| **Campo**  | **Tipo** | **Descrição**           |
+|:-----------|:---------|:------------------------|
+| id         | int      | ID do produto.          |
+| name       | string   | Nome do produto.        |
+| quantity   | int      | Quantidade do produto.  |
+
+#### Códigos de status da resposta
+| **Código** | **Descrição**                      |
+|:-----------|:-----------------------------------|
+| 200        | Produto retornado com sucesso.     |
+| 404        | Produto não encontrado.            |
+
+#### Exemplo
+Resposta:
+```json
+ {
+   "id": 1,
+   "name": "Martelo de Thor",
+   "quantity": 10
+ }
+```
