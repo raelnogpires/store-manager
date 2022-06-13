@@ -52,11 +52,11 @@ O corpo da resposta contém um array JSON contendo os produtos.
 ```
 
 #### Campos da resposta
-| **Campo**  | **Tipo** | **Descrição**           |
-|:-----------|:---------|:------------------------|
-| id         | int      | ID do produto.          |
-| name       | string   | Nome do produto.        |
-| quantity   | int      | Quantidade do produto.  |
+| **Campo**  | **Tipo** | **Descrição**                      |
+|:-----------|:---------|:-----------------------------------|
+| id         | int      | ID do produto.                     |
+| name       | string   | Nome do produto.                   |
+| quantity   | int      | Quantidade em estoque do produto.  |
 
 #### Códigos de status da resposta
 | **Código** | **Descrição**                      |
@@ -87,7 +87,7 @@ Resposta:
 
 </details>
 
-### Listar produtos por ID
+### Listar produto por ID
 Busca um produto especificado pelo seu ID.  
 Corpo da resposta contém um objeto JSON com o produto.  
 
@@ -96,7 +96,7 @@ Corpo da resposta contém um objeto JSON com o produto.
 
 #### URL
 ```sh
- GET http://localhost:3000/products/1
+ GET http://localhost:3000/products/{id}
 ```
 
 #### Parâmetros
@@ -107,11 +107,11 @@ Corpo da resposta contém um objeto JSON com o produto.
 | id         | int      | ID do produto.          |
 
 #### Campos da resposta
-| **Campo**  | **Tipo** | **Descrição**           |
-|:-----------|:---------|:------------------------|
-| id         | int      | ID do produto.          |
-| name       | string   | Nome do produto.        |
-| quantity   | int      | Quantidade do produto.  |
+| **Campo**  | **Tipo** | **Descrição**                     |
+|:-----------|:---------|:----------------------------------|
+| id         | int      | ID do produto.                    |
+| name       | string   | Nome do produto.                  |
+| quantity   | int      | Quantidade em estoque do produto. |
 
 #### Códigos de status da resposta
 | **Código** | **Descrição**                      |
@@ -128,3 +128,116 @@ Resposta:
    "quantity": 10
  }
 ```
+
+</details>
+
+### Cadastrar produto
+Cadastra um novo produto.  
+Corpo da resposta contém um objeto JSON com as informações do produto cadastrado.
+
+<details>
+  <summary><strong>Detalhes</strong></summary>
+
+#### URL
+```sh
+ POST http://localhost:3000/products
+```
+
+#### Parâmetros
+
+##### Body
+| **Parâmetro**  | **Tipo** | **Descrição**                                       |
+|:---------------|:---------|:----------------------------------------------------|
+| name           | string   | Nome do produto. **Obrigatório**, mínimo: 5 letras. |
+| quantity       | int      | Quantidade do produto. **Obrigatório**, mínimo: 1.  |
+
+#### Campos da resposta
+| **Campo**  | **Tipo** | **Descrição**                      |
+|:-----------|:---------|:-----------------------------------|
+| id         | int      | ID do produto.                     |
+| name       | string   | Nome do produto.                   |
+| quantity   | int      | Quantidade em estoque do produto.  |
+
+#### Códigos de status da resposta
+| **Código** | **Descrição**                                     |
+|:-----------|:--------------------------------------------------|
+| 201        | Produto cadastrado com sucesso.                   |
+| 400        | Parâmetro não encontrado no `body` da requisição. |
+| 422        | Parâmetro inválido.                               |
+
+#### Exemplo
+
+Requisição:
+```json
+ "name": "Armadura do Homem de Ferro",
+ "quantity": 1,
+```
+
+Resposta:
+```json
+ "id": 4,
+ "name": "Armadura do Homem de Ferro",
+ "quantity": 1,
+```
+
+</details>
+
+### Atualizar um produto
+Edita um produto especificado pelo seu ID.  
+Corpo da resposta contém um objeto JSON com as informações do produto atualizado.
+
+<details>
+  <summary><strong>Detalhes</strong></summary>
+
+#### URL
+```sh
+ PUT http://localhost:3000/products/{id}
+```
+
+#### Parâmetros
+
+##### Path
+| **Campo**  | **Tipo** | **Descrição**           |
+|:-----------|:---------|:------------------------|
+| id         | int      | ID do produto.          |
+
+##### Body
+| **Parâmetro**  | **Tipo** | **Descrição**                                       |
+|:---------------|:---------|:----------------------------------------------------|
+| name           | string   | Nome do produto. **Obrigatório**, mínimo: 5 letras. |
+| quantity       | int      | Quantidade do produto. **Obrigatório**, mínimo: 1.  |
+
+#### Campos da resposta
+| **Campo**  | **Tipo** | **Descrição**                      |
+|:-----------|:---------|:-----------------------------------|
+| id         | int      | ID do produto.                     |
+| name       | string   | Nome do produto.                   |
+| quantity   | int      | Quantidade em estoque do produto.  |
+
+#### Códigos de status da resposta
+| **Código** | **Descrição**                                     |
+|:-----------|:--------------------------------------------------|
+| 200        | Produto atualizado com sucesso.                   |
+| 400        | Parâmetro não encontrado no `body` da requisição. |
+| 404        | Produto não encontrado.                           |
+| 422        | Parâmetro inválido.                               |
+
+#### Exemplo
+
+Requisição:  
+`http://localhost:3000/products/1`  
+
+```json
+ "name": "Anel de Sauron",
+ "quantity": 2,
+```
+
+Resposta:
+```json
+ "id": 1,
+ "name": "Anel de Sauron",
+ "quantity": 2,
+```
+
+</details>
+
