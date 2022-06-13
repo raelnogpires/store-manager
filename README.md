@@ -120,7 +120,10 @@ Corpo da resposta contém um objeto JSON com o produto e suas informações.
 | 404        | Produto não encontrado.            |
 
 #### Exemplo
-Resposta:
+
+`http://localhost:3000/products/1`  
+Resposta:  
+
 ```json
  {
    "id": 1,
@@ -356,7 +359,9 @@ Corpo da resposta contém um objeto JSON contendo a venda e suas informações.
 
 #### Exemplo
 
-Resposta:
+`http://localhost:3000/sales/2`  
+Resposta:  
+
 ```json
  {
   "date": "2022-06-13T19:19:01.000Z",
@@ -364,5 +369,184 @@ Resposta:
   "quantity": 15
  }
 ```
+
+</details>
+
+### Cadastrar venda
+Cadastra uma nova venda.  
+Corpo da resposta contém um objeto JSON com as informações da venda cadastrada.
+
+<details>
+  <summary><strong>Detalhes</strong></summary>
+
+#### URL
+
+```sh
+ POST http://localhost:3000/sales
+```
+
+#### Parâmetros
+
+##### Body
+
+| **Campo**  | **Tipo** | **Descrição**                                               |
+|:-----------|:---------|:------------------------------------------------------------|
+| productId  | int      | ID do produto vendido. **Obrigatório**.                     |
+| quantity   | int      | Quantidade vendida do produto. **Obrigatório**, mínimo: 1.  |
+
+#### Campos da resposta
+| **Campo**           | **Tipo**    | **Descrição**                      |
+|:--------------------|:------------|:-----------------------------------|
+| id                  | string      | ID da venda.                       |
+| itemsSold           | object array| Array dos produtos vendidos.       |
+| itemsSold.productId | int         | ID do produto vendido.             |
+| itemsSold.quantity  | int         | Quantidade vendida do produto.     |
+
+#### Códigos de status da resposta
+| **Código** | **Descrição**                                    |
+|:-----------|:-------------------------------------------------|
+| 200        | Venda cadastrada com sucesso.                    |
+| 400        | Parâmetro não encontrado no `body` da requisição.|
+| 422        | Parâmetro inválido.                              |
+
+#### Exemplo
+
+Requisição:
+```json
+ [
+  {
+    "productId": 1,
+    "quantity": 10
+  },
+  {
+    "productId": 2,
+    "quantity": 5
+  }
+ ]
+```
+
+Resposta:
+```json
+ {
+   "id": 3,
+   "itemSold": [
+    {
+     "productId": 1,
+     "quantity": 10
+    },
+    {
+     "productId": 2,
+     "quantity": 5
+    }
+   ]
+ }
+```
+
+</details>
+
+### Atualiza uma venda
+Edita uma venda especificada pelo seu ID.  
+Corpo da resposta contém um objeto JSON com as informações da venda atualizada.
+
+<details>
+  <summary><strong>Detalhes</strong></summary>
+
+#### URL
+
+```sh
+ PUT http://localhost:3000/sales/{id}
+```
+
+#### Parâmetros
+
+##### Path
+| **Campo**  | **Tipo** | **Descrição**          |
+|:-----------|:---------|:-----------------------|
+| id         | int      | ID da venda.           |
+
+##### Body
+
+| **Campo**  | **Tipo** | **Descrição**                                               |
+|:-----------|:---------|:------------------------------------------------------------|
+| productId  | int      | ID do produto vendido. **Obrigatório**.                     |
+| quantity   | int      | Quantidade vendida do produto. **Obrigatório**, mínimo: 1.  |
+
+#### Campos da resposta
+| **Campo**           | **Tipo**    | **Descrição**                      |
+|:--------------------|:------------|:-----------------------------------|
+| id                  | string      | ID da venda.                       |
+| itemsSold           | object array| Array dos produtos vendidos.       |
+| itemsSold.productId | int         | ID do produto vendido.             |
+| itemsSold.quantity  | int         | Quantidade vendida do produto.     |
+
+#### Códigos de status da resposta
+| **Código** | **Descrição**                                    |
+|:-----------|:-------------------------------------------------|
+| 200        | Venda atualizada com sucesso.                    |
+| 400        | Parâmetro não encontrado no `body` da requisição.|
+| 404        | Venda não encontrada.                            |
+| 422        | Parâmetro inválido.                              |
+
+#### Exemplo
+Requisição:  
+`http://localhost:3000/sales/3`  
+
+```json
+ [
+  {
+    "productId": 1,
+    "quantity": 8
+  },
+  {
+    "productId": 2,
+    "quantity": 6
+  }
+ ]
+```
+
+Resposta:
+```json
+ {
+   "id": 3,
+   "itemSold": [
+    {
+     "productId": 1,
+     "quantity": 8
+    },
+    {
+     "productId": 2,
+     "quantity": 6
+    }
+   ]
+ }
+```
+
+</details>
+
+### Deletar uma venda
+Deleta uma venda especificada pelo seu ID.
+
+<details>
+  <summary><strong>Detalhes</strong></summary>
+
+#### URL
+```sh
+ DELETE http://localhost:3000/sales/{id}
+```
+
+#### Parâmetros
+
+##### Path
+| **Campo**  | **Tipo** | **Descrição**           |
+|:-----------|:---------|:------------------------|
+| id         | int      | ID do venda.            |
+
+#### Códigos de status da resposta
+| **Código** | **Descrição**                                     |
+|:-----------|:--------------------------------------------------|
+| 204        | Venda deletada com sucesso.                       |
+| 404        | Venda não encontrada.                             |
+
+Este endpoint retorna, em caso de sucesso, apenas o status `204` .
 
 </details>
